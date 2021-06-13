@@ -9,6 +9,7 @@
 </head>
 <body>
 <div class="container">
+    <a th:href="${'/admin/add-product'}">Add</a></td>
     <table class="table">
         <thead>
         <tr>
@@ -26,7 +27,7 @@
             <td th:text="${item.category}"></td>
             <td th:text="${item.price}"></td>
             <td class="text-center"><a th:href="${'/admin/edit-product/' + item.id}"><i class="far fa-edit"></i></a></td>
-            <td class="text-center"><i class="far fa-trash-alt"></i></td>
+            <td class="text-center"><a th:href="${'/admin/delete-product/' + item.id}"><i class="far fa-trash-alt"></i></a></td>
         </tr>
         </tbody>
     </table>

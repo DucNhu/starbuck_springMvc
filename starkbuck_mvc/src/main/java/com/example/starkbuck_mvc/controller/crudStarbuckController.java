@@ -3,16 +3,10 @@ package com.example.starkbuck_mvc.controller;
 import com.example.starkbuck_mvc.models.starbuck;
 import com.example.starkbuck_mvc.repository.StarbuckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping(path="/admin")
@@ -24,6 +18,15 @@ public class crudStarbuckController {
     public String getAll(Model model) {
         model.addAttribute("listData", starbuckRepository.findAll());
         return "Admin/admin-home";
+    }
+
+    @GetMapping("/add-product")
+    public String AddProduct(
+            Model model
+    ) {
+        starbuck NewStaruck = new starbuck();
+        model.addAttribute("the_Starbuck", NewStaruck);
+        return "Admin/asd";
     }
 
     @GetMapping("/edit-product/{id}")
@@ -45,8 +48,7 @@ public class crudStarbuckController {
     ) {
         starbuck theStarbuck = starbuckRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ko tim thay id : " + id));
-//        starbuck newstarbuck = new starbuck(theStarbuck.getName(),theStarbuck.getCategory(), theStarbuck.getAvatar(),
-//                theStarbuck.getPrice(), theStarbuck.getSale());
+
         theStarbuck.setName(starbuckDetail.getName());
         theStarbuck.setAvatar(starbuckDetail.getAvatar());
         theStarbuck.setCategory(starbuckDetail.getCategory());
@@ -54,8 +56,29 @@ public class crudStarbuckController {
         theStarbuck.setSale(starbuckDetail.getSale());
 
         starbuckRepository.save(theStarbuck);
-
-        return "Admin/admin-home";
+        model.addAttribute("listData", starbuckRepository.findAll());
+        return "redirect:/admin/home-page";
     }
 
+    @GetMapping("/delete-product/{id}")
+    public String DeleteProduct(
+            @PathVariable(value = "id") Integer id,
+            Model model
+    ) {
+
+        starbuckRepository.deleteById(id);
+        model.addAttribute("listData", starbuckRepository.findAll());
+        return "redirect:/admin/home-page";
+    }
+
+    @PostMapping("/new-product")
+    public String NewProduct(@ModelAttribute("the_Starbuck") starbuck starbuckDetail, Model model
+    ) {
+        starbuck newstarbuck = new starbuck(starbuckDetail.getName(),starbuckDetail.getCategory(), starbuckDetail.getAvatar(),
+                starbuckDetail.getPrice(), starbuckDetail.getSale());
+
+        starbuckRepository.save(newstarbuck);
+        model.addAttribute("listData", starbuckRepository.findAll());
+        return "redirect:/admin/home-page";
+    }
 }

@@ -5,9 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<h1 th:text="${the_Starbuck.getName()}" />
 <div class="container">
-    <form th:action="${'/admin/update-product/' + the_Starbuck.getId()}" th:object="${the_Starbuck}" method="post">
+    <form th:action="${'/admin/new-product'}" th:object="${the_Starbuck}" method="post">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputEmail4">name</label>

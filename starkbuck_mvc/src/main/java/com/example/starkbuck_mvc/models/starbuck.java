@@ -1,20 +1,23 @@
 package com.example.starkbuck_mvc.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="starbuck")
 public class starbuck {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     public int id;
 
+    @Column(name="name")
     public String name;
+    @Column(name="category")
     public String category;
+    @Column(name="avatar")
     public String avatar;
+    @Column(name="price")
     public int price;
+    @Column(name="sale")
     public int sale;
 
     public starbuck() {}

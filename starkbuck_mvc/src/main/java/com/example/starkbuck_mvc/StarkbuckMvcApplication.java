@@ -9,5 +9,4 @@ public class StarkbuckMvcApplication {
     public static void main(String[] args) {
         SpringApplication.run(StarkbuckMvcApplication.class, args);
     }
-
 }
